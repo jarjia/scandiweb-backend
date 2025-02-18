@@ -1,0 +1,8 @@
+<?php
+
+return "CREATE TABLE IF NOT EXISTS categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    __typename VARCHAR(255) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);";
