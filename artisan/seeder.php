@@ -10,4 +10,4 @@ if (!isset($argv[1])) {
 }
 
 $seeder = new Seeder();
-$seeder->handle($argv[1]);
+$seeder->seed($argv[1]);

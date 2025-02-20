@@ -10,13 +10,13 @@ use Exception;
 
 class Seeder
 {
-    public static function handle(string $api_url): void
+    public static function seed(string $api_url): void
     {
         $response = file_get_contents($api_url);
 
         $data = json_decode($response, true)['data'];
 
-        $conn = Database::getConnection();
+        $conn = Database::getConnInstance()->getConnection();
 
         $conn->beginTransaction();
 
@@ -47,6 +47,7 @@ class Seeder
                         'items' => json_encode($attr['items'])
                     ];
                 }
+
                 return $carry;
             }, []);
 

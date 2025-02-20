@@ -2,7 +2,7 @@
 
 namespace App\GraphQL\Types;
 
-use App\GraphQL\TypeRegistry;
+use App\Helpers\TypeRegistry;
 use App\Models\Attribute;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;

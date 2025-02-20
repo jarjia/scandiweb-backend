@@ -2,30 +2,45 @@
 
 namespace App\Core;
 
+require __DIR__ . "/../../bootstrap/app.php";
+
+use App\Helpers\Config;
 use PDO;
 use PDOException;
 
 class Database
 {
-    private static ?PDO $conn = null;
+    private static ?Database $instance = null;
+    private ?PDO $conn = null;
 
-    public static function getConnection(): PDO
+    public function __construct()
     {
-        if (self::$conn === null) {
-            $driver = config('database.driver', 'mysql');
-            $host = config('database.host');
-            $db = config('database.db');
-            $user = config('database.user');
-            $password = config('database.password');
+        $config = Config::getInstance();
 
-            try {
-                self::$conn = new PDO("$driver:host=$host;dbname=$db;charset=utf8", $user, $password);
-                self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                die("error" . $e->getMessage());
-            }
+        $driver = $config->get('database.driver', 'mysql');
+        $host = $config->get('database.host', 'localhost');
+        $db = $config->get('database.db');
+        $user = $config->get('database.user');
+        $password = $config->get('database.password');
+
+        try {
+            $this->conn = new PDO("$driver:host=$host;dbname=$db;charset=utf8", $user, $password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("error" . $e->getMessage());
         }
+    }
 
-        return self::$conn;
+    public static function getConnInstance(): Database
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public function getConnection(): PDO
+    {
+        return $this->conn;
     }
 }

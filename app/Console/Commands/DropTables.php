@@ -10,9 +10,9 @@ class DropTables
 {
     public function handle(): void
     {
-        $conn = Database::getConnection();
-
         try {
+            $conn = Database::getConnInstance()->getConnection();
+
             $conn->exec('SET FOREIGN_KEY_CHECKS = 0');
 
             $stmt = $conn->query("SHOW TABLES");

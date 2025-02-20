@@ -22,7 +22,7 @@ abstract class Base
 
     protected static function getConnection(): PDO
     {
-        return Database::getConnection();
+        return Database::getConnInstance()->getConnection();
     }
 
     public static function get(): array

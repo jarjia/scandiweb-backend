@@ -21,7 +21,7 @@ class OrderMutation
             'args' => [
                 'data' => Type::listOf(OrderType::OrderInput())
             ],
-            'resolve' => function ($rootValue, array $args) {
+            'resolve' => function ($root, array $args) {
                 $order = Order::createAll($args['data']);
 
                 return [

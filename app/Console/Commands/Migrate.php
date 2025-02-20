@@ -15,7 +15,8 @@ class Migrate
 
     public function handle(): void
     {
-        $conn = Database::getConnection();
+        $conn = Database::getConnInstance()->getConnection();
+        
         $files = scandir($this->migrationsPath);
         $files = array_filter($files, fn($file) => $file !== '.' && $file !== '..');
 

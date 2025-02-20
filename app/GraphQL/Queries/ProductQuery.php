@@ -4,7 +4,6 @@ namespace App\GraphQL\Queries;
 
 use App\GraphQL\Types\ProductType;
 use App\Models\Product;
-use App\Services\ProductService;
 use GraphQL\Type\Definition\Type;
 
 class ProductQuery
@@ -16,10 +15,7 @@ class ProductQuery
                 'category' => ['type' => Type::string()]
             ],
             'type' => Type::listOf(ProductType::handle()),
-            'resolve' => function ($root, $args) {
-                $productService = new ProductService();
-                return $productService->getProductsByCategory($args['category']);
-            }
+            'resolve' => fn($root, $args) => Product::get($args['category']),
         ];
     }
 
