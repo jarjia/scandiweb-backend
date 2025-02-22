@@ -10,8 +10,8 @@ class AttributeType
 {
     public static function handle(): ObjectType
     {
-        return new ObjectType([
-            'name' => 'AttributeSet',
+        return TypeRegistry::get('Attribute', fn() => new ObjectType([
+            'name' => 'Attribute',
             'fields' => [
                 'id' => ['type' => Type::int()],
                 'type' => ['type' => Type::string()],
@@ -21,13 +21,13 @@ class AttributeType
                     'resolve' => fn($root) => json_decode($root['items'])
                 ]
             ]
-        ]);
+        ]));
     }
 
     public static function AttributeItem(): ObjectType
     {
         return new ObjectType([
-            'name' => 'Attribute',
+            'name' => 'AttributeItem',
             'fields' => [
                 'id' => ['type' => Type::string()],
                 'displayValue' => ['type' => Type::string()],

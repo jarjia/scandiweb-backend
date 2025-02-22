@@ -2,25 +2,24 @@
 
 namespace App\GraphQL\Types;
 
+use App\Helpers\TypeRegistry;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
 class Price
 {
-    static public function handle()
+    public static function handle(): ObjectType
     {
-        return new ObjectType([
+        return TypeRegistry::get('Price', fn() => new ObjectType([
             'name' => 'Price',
             'fields' => [
                 'amount' => ['type' => Type::string()],
-                'currency' => [
-                    'type' => self::Currency()
-                ],
+                'currency' => ['type' => self::Currency()],
             ]
-        ]);
+        ]));
     }
 
-    static public function Currency()
+    public static function Currency()
     {
         return new ObjectType([
             'name' => 'Currency',
