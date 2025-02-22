@@ -20,8 +20,8 @@ class ProductsType
                 'inStock' => ['type' => Type::boolean()],
                 'description' => ['type' => Type::string()],
                 'gallery' => [
-                    'type' => Type::listOf(Type::string()),
-                    'resolve' => fn($root) => json_decode($root['gallery'], true)
+                    'type' => Type::string(),
+                    'resolve' => fn($root) => json_decode($root['gallery'], true)[0]
                 ],
                 'price' => [
                     'type' => Price::handle(),

@@ -13,7 +13,7 @@ class Category extends Base
     {
         return [
             'type' => Type::listOf(CategoryType::handle()),
-            'resolve' => fn() => Category::get()
+            'resolve' => fn() => self::get()
         ];
     }
 }

@@ -24,7 +24,7 @@ class Product extends Base
                 'category' => ['type' => Type::string()]
             ],
             'type' => Type::listOf(ProductsType::handle()),
-            'resolve' => fn($root, $args) => Product::get($args['category']),
+            'resolve' => fn($root, $args) => self::get($args['category']),
         ];
     }
 
@@ -35,7 +35,7 @@ class Product extends Base
                 'product_id' => ['type' => Type::string()],
             ],
             'type' => ProductType::handle(true),
-            'resolve' => fn($root, $args) => Product::firstWhere('id', $args['product_id']),
+            'resolve' => fn($root, $args) => parent::firstWhere('id', $args['product_id']),
         ];
     }
 }
