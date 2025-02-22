@@ -10,12 +10,12 @@ class CategoryType
 {
     public static function handle(): ObjectType
     {
-        return TypeRegistry::get('Category', fn() => new ObjectType([
+        return new ObjectType([
             'name' => 'Category',
             'fields' => [
                 'id' => ['type' => Type::int()],
                 'name' => ['type' => Type::string()]
             ]
-        ]));
+        ]);
     }
 }

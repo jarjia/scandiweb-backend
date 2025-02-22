@@ -5,6 +5,9 @@ namespace App\Controllers;
 use App\GraphQL\Mutations\OrderMutation;
 use App\GraphQL\Queries\CategoryQuery;
 use App\GraphQL\Queries\ProductQuery;
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Product;
 use GraphQL\GraphQL as GraphQLBase;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Schema;
@@ -20,16 +23,16 @@ class GraphQL
             $queryType = new ObjectType([
                 'name' => 'Query',
                 'fields' => [
-                    'categories' => CategoryQuery::Categories(),
-                    'products' => ProductQuery::Products(),
-                    'product' => ProductQuery::Product()
+                    'categories' => Category::categoriesQuery(),
+                    'products' => Product::productsQuery(),
+                    'product' => Product::productQuery()
                 ],
             ]);
 
             $mutationType = new ObjectType([
                 'name' => 'Mutation',
                 'fields' => [
-                    'createOrder' => OrderMutation::Order(),
+                    'createOrder' => Order::orderMutation(),
                 ],
             ]);
 

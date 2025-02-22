@@ -7,12 +7,12 @@ use App\Models\Attribute;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
-class ProductType
+class ProductsType
 {
     public static function handle()
     {
         return new ObjectType([
-            'name' => "Product",
+            'name' => "Products",
             'fields' => [
                 'id' => ['type' => Type::string()],
                 'category_name' => ['type' => Type::string()],
@@ -20,8 +20,8 @@ class ProductType
                 'inStock' => ['type' => Type::boolean()],
                 'description' => ['type' => Type::string()],
                 'gallery' => [
-                    'type' => Type::string(),
-                    'resolve' => fn($root) => json_decode($root['gallery'], true)[0]
+                    'type' => Type::listOf(Type::string()),
+                    'resolve' => fn($root) => json_decode($root['gallery'], true)
                 ],
                 'price' => [
                     'type' => Price::handle(),
