@@ -17,17 +17,22 @@ class Database
     {
         $config = Config::getInstance();
 
-        $driver = $config->get('database.driver', 'mysql');
-        $host = $config->get('database.host', 'localhost');
-        $db = $config->get('database.db');
-        $user = $config->get('database.user');
-        $password = $config->get('database.password');
+        $driver = $config->get('database.driver', 'sqlite');
+        $databasePath = dirname(__DIR__, 2) . '/database/database.sqlite';
 
         try {
-            $this->conn = new PDO("$driver:host=$host;dbname=$db;charset=utf8", $user, $password);
+            if ($driver === 'sqlite') {
+                $this->conn = new PDO("sqlite:$databasePath");
+            } else {
+                $host = $config->get('database.host', 'localhost');
+                $user = $config->get('database.user');
+                $password = $config->get('database.password');
+                $this->conn = new PDO("$driver:host=$host;dbname=$databasePath;charset=utf8", $user, $password);
+            }
+
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            die("error" . $e->getMessage());
+            die("error: " . $e->getMessage());
         }
     }
 

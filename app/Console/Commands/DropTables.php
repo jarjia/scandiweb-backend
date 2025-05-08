@@ -12,8 +12,9 @@ class DropTables
     {
         try {
             $conn = Database::getConnInstance()->getConnection();
+            echo $conn->getAttribute(PDO::ATTR_DRIVER_NAME);
 
-            $conn->exec('SET FOREIGN_KEY_CHECKS = 0');
+            $conn->exec('PRAGMA foreign_keys = OFF');
 
             $stmt = $conn->query("SHOW TABLES");
             $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -33,7 +34,7 @@ class DropTables
                 echo "Error: " . $e->getMessage();
             }
         } finally {
-            $conn->exec("SET FOREIGN_KEY_CHECKS = 1");
+            $conn->exec('PRAGMA foreign_keys = ON');
         }
     }
 }
